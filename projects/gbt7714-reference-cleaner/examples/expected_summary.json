@@ -1,0 +1,12 @@
+{
+  "input_count": 20,
+  "unique_count": 17,
+  "duplicate_count": 3,
+  "formatted_count": 15,
+  "draft_count": 2,
+  "duplicate_pairs": [["r04", "r07"], ["r03", "r08"], ["r09", "r10"]],
+  "draft_source_ids": ["r13", "r14"],
+  "retained_conflict_pair": ["r04", "r15"],
+  "retained_edition_pair": ["r03", "r11"],
+  "expected_review_pairs_include": [["r04", "r12"]]
+}

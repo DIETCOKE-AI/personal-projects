@@ -1,0 +1,15 @@
+[1] 王泽昊, 朱振华, 谢童欣, 等. 混合专家大语言模型的系统与架构优化技术综述[J]. 电子与信息学报, 2025, 47(11): 4055-4078.
+[2] Sun Q, Wang H, Zhan J, et al. Generalizing motion planners with mixture of experts for autonomous driving[C]//2025 IEEE International Conference on Robotics and Automation (ICRA). IEEE, 2025: 6033-6039.
+[3] 林乔. 可解释机器学习导论[M]. 2版. 北京: 示例出版社, 2022.
+[4] Adams R, Baker L. A survey of sparse expert routing[J]. Example Journal of Intelligent Systems, 2024, 12(2): 101-118.
+[5] 陈澄. 面向多源数据的鲁棒表示学习[D]. 南京: 示例大学, 2024.
+[6] 示例研究组. 开放实验数据说明[EB/OL]. (2025-08-01)[2026-11-03]. https://example.org/data.
+[7] Clark N. Sparse routing for efficient multimodal inference[J]. Example Computing Review, 2023, 8(3): 201-216.
+[8] 林乔. 可解释机器学习导论[M]. 3版. 北京: 示例出版社, 2022.
+[9] Adams R, Baker L. A survey of sparse experts routing[J]. Example Journal of Intelligent Systems, 2024, 12(2): 119-132.
+[10] Adams R, Baker L. A survey of sparse expert routing[J]. Example Journal of Intelligent Systems, 2024, 12(2): 101-118.
+[11] Anderson R, Wilson T. Reliable data systems[M]. Boston: Example Press, 2022.
+[12] 张研, 李文, 陈林, 等. 分层检索增强问答的实验评估[C]//全国智能信息处理学术会议论文集. 北京: 示例出版社, 2024: 21-29.
+[13] 黄禾. 面向长文本的 检索评估方法[J]. 示例信息技术学报, 2025, 9(2): 107-118.
+[14] Miller A. Reliable evaluation of retrieval systems[D]. London: Example University, 2021.
+[15] 示例数据中心. 实验元数据规范说明[EB/OL]. (2024-05-09)[2026-11-03]. https://example.org/metadata.

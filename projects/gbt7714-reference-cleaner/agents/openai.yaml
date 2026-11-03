@@ -1,0 +1,4 @@
+interface:
+  display_name: "文献格式整理"
+  short_description: "批量规范 GB/T 7714 参考文献，保守去重并保留缺失项与来源审计"
+  default_prompt: "使用 $gbt7714-reference-cleaner 整理这批参考文献，输出规范列表、待补字段和去重依据。"

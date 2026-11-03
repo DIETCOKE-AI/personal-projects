@@ -1,0 +1,100 @@
+{
+  "fixture_note": "课程测试数据：r01、r02保留题目给出的著录信息，作者截断由authors_truncated明确表达；r02的英文名字仅保留Q/H/J首字母，不扩写未知全名。两条均未独立核验真伪。其余条目均为教学构造数据，example.org与10.5555/example.*仅作测试标识，不应当作真实参考文献引用。缺作者和缺年份转草稿属于本工具提交门槛，不等同于声称国标一律不允许省略。",
+  "records": [
+    {
+      "id": "r01", "type": "journal", "language": "zh",
+      "authors": ["王泽昊", "朱振华", "谢童欣"], "authors_truncated": true,
+      "title": "混合专家大语言模型的系统与架构优化技术综述",
+      "container": "电子与信息学报", "year": "2025", "volume": "47", "issue": "11", "pages": "4055–4078"
+    },
+    {
+      "id": "r02", "type": "conference", "language": "en",
+      "authors": [{"family": "Sun", "given": "Q"}, {"family": "Wang", "given": "H"}, {"family": "Zhan", "given": "J"}], "authors_truncated": true,
+      "title": "Generalizing motion planners with mixture of experts for autonomous driving",
+      "container": "2025 IEEE International Conference on Robotics and Automation (ICRA)",
+      "publisher": "IEEE", "year": 2025, "pages": "6033--6039"
+    },
+    {
+      "id": "r03", "type": "book", "language": "zh", "authors": ["林乔"],
+      "title": "可解释机器学习导论", "edition": "2版", "place": "北京", "publisher": "示例出版社", "year": 2022
+    },
+    {
+      "id": "r04", "type": "J", "language": "en", "authors": [{"family": "Adams", "given": "Robin"}, {"family": "Baker", "given": "Lina"}],
+      "title": "A survey of sparse expert routing", "container": "Example Journal of Intelligent Systems",
+      "year": 2024, "volume": "12", "issue": "2", "pages": "101-118", "doi": "10.5555/example.004"
+    },
+    {
+      "id": "r05", "type": "thesis", "language": "zh", "authors": ["陈澄"],
+      "title": "面向多源数据的鲁棒表示学习", "place": "南京", "publisher": "示例大学", "year": 2024
+    },
+    {
+      "id": "r06", "type": "web", "language": "zh", "authors": [{"literal": "示例研究组"}],
+      "title": "开放实验数据说明", "date": "2025-08-01", "access_date": "2026-11-03", "url": "https://example.org/data"
+    },
+    {
+      "id": "r07", "type": "journal", "language": "en", "authors": ["Adams R", "Baker L"],
+      "title": "  A survey of sparse expert routing  ", "container": "Example Journal of Intelligent Systems",
+      "year": "2024", "volume": "12", "issue": "2", "pages": "101–118", "doi": "https://doi.org/10.5555/EXAMPLE.004"
+    },
+    {
+      "id": "r08", "type": "M", "language": "zh", "authors": [" 林乔 "],
+      "title": "  可解释机器学习导论　", "edition": "2版", "place": "北京", "publisher": "示例出版社", "year": "2022"
+    },
+    {
+      "id": "r09", "type": "J", "language": "en", "authors": [{"family": "Clark", "given": "Nora"}],
+      "title": "Sparse routing for efficient multimodal inference", "container": "Example Computing Review",
+      "year": 2023, "volume": "8", "issue": "3", "doi": "10.5555/example.009"
+    },
+    {
+      "id": "r10", "type": "J", "language": "en", "authors": ["Clark N"],
+      "title": "Sparse routing for efficient multimodal inference", "container": "Example Computing Review",
+      "year": 2023, "volume": "8", "issue": "3", "pages": "201–216", "doi": "doi:10.5555/EXAMPLE.009"
+    },
+    {
+      "id": "r11", "type": "M", "language": "zh", "authors": ["林乔"],
+      "title": "可解释机器学习导论", "edition": "3版", "place": "北京", "publisher": "示例出版社", "year": 2022
+    },
+    {
+      "id": "r12", "type": "J", "language": "en", "authors": ["Adams R", "Baker L"],
+      "title": "A survey of sparse experts routing", "container": "Example Journal of Intelligent Systems",
+      "year": 2024, "volume": "12", "issue": "2", "pages": "119-132"
+    },
+    {
+      "id": "r13", "type": "J", "language": "zh", "authors": [],
+      "title": "面向边缘设备的模型压缩方法", "container": "示例计算学报",
+      "year": 2023, "volume": "6", "issue": "1", "pages": "11-20"
+    },
+    {
+      "id": "r14", "type": "C", "language": "en", "authors": ["Evans T"],
+      "title": "An evaluation protocol for expert routing", "container": "Example Conference on Reliable AI",
+      "publisher": "Example Association", "pages": "51-59"
+    },
+    {
+      "id": "r15", "type": "J", "language": "en", "authors": ["Adams R", "Baker L"],
+      "title": "A survey of sparse expert routing", "container": "Example Journal of Intelligent Systems",
+      "year": 2024, "volume": "12", "issue": "2", "pages": "101-118", "doi": "10.5555/example.conflict"
+    },
+    {
+      "id": "r16", "type": "M", "language": "en", "authors": [{"family": "Anderson", "given": "Ruth"}, {"family": "Wilson", "given": "Tom"}],
+      "title": "Reliable data systems", "place": "Boston", "publisher": "Example Press", "year": 2022
+    },
+    {
+      "id": "r17", "type": "C", "language": "zh", "authors": ["张研", "李文", "陈林", "赵澄"],
+      "title": "分层检索增强问答的实验评估", "container": "全国智能信息处理学术会议论文集",
+      "place": "北京", "publisher": "示例出版社", "year": 2024, "pages": "21—29"
+    },
+    {
+      "id": "r18", "type": "J", "language": "zh", "authors": [{"literal": " 黄禾　"}],
+      "title": "　面向长文本的　检索评估方法  ", "container": "示例信息技术学报",
+      "year": "2025", "volume": "９", "issue": "２", "pages": "107—118"
+    },
+    {
+      "id": "r19", "type": "D", "language": "en", "authors": [{"family": "Miller", "given": "Alex"}],
+      "title": "Reliable evaluation of retrieval systems", "place": "London", "publisher": "Example University", "year": 2021
+    },
+    {
+      "id": "r20", "type": "EB/OL", "language": "zh", "authors": [{"literal": "示例数据中心"}],
+      "title": "实验元数据规范说明", "date": "2024-05-09", "access_date": "2026-11-03", "url": "https://example.org/metadata"
+    }
+  ]
+}
