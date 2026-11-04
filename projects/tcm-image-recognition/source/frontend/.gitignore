@@ -1,0 +1,17 @@
+node_modules/
+dist/
+dist-ssr/
+release/
+python-dist/
+external/
+tcm_app/
+*.log
+.env
+.env.*
+!.env.example
+!.env.development.example
+!.env.production.example
+*.local
+.vscode/
+.idea/
+.DS_Store

@@ -1,0 +1,30 @@
+[
+  {
+    "model_name": "MobileViT_large",
+    "ckpt_version": "8895911",
+    "ckpt_epoch": 59,
+    "ckpt_type": "regular",
+    "transform_type": "center_crop"
+  },
+  {
+    "model_name": "MNv4_Conv_AA_Large",
+    "ckpt_version": "183155",
+    "ckpt_epoch": 36,
+    "ckpt_type": "regular",
+    "transform_type": "center_crop"
+  },
+  {
+    "model_name": "EfficientNetV2_S",
+    "ckpt_version": "9379044",
+    "ckpt_epoch": 48,
+    "ckpt_type": "regular",
+    "transform_type": "center_crop"
+  },
+  {
+    "model_name": "ConvNeXt_V2_Tiny",
+    "ckpt_version": "5905084",
+    "ckpt_epoch": 37,
+    "ckpt_type": "regular",
+    "transform_type": "center_crop"
+  }
+]

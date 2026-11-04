@@ -1,0 +1,40 @@
+{
+  "review_date": "2026-11-04",
+  "scope": "Sanitized core source snapshot and historical project documentation",
+  "checks": {
+    "files": 226,
+    "python_ast": 105,
+    "json": 9,
+    "jsonc": 4,
+    "markdown_links": 82,
+    "historical_evaluation_records": 23
+  },
+  "components": {
+    "backend": {
+      "files": 49,
+      "bytes": 165369
+    },
+    "frontend": {
+      "files": 89,
+      "bytes": 621252
+    },
+    "algorithm": {
+      "files": 77,
+      "bytes": 587687
+    }
+  },
+  "historical_evaluation_rows_compared_to_local_source": 23,
+  "frontend_javascript_syntax_checks": 3,
+  "newly_missing_local_python_imports": 0,
+  "sensitive_pattern_findings": 0,
+  "broken_public_document_links": 0,
+  "project_runtime_executed": false,
+  "models_loaded_or_retrained": false,
+  "hardware_operated": false,
+  "original_engineering_files_modified": false,
+  "notes": [
+    "Static checks do not certify dependency imports, build artifacts, model compatibility or end-to-end behavior.",
+    "Historical metrics were not remeasured during publication.",
+    "Documented pre-existing gaps and placeholder branches remain in the source snapshot."
+  ]
+}

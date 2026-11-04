@@ -1,0 +1,14 @@
+# Main imports observed in the published Python source; unpinned, not an environment lock.
+# Select mutually compatible PyTorch / CUDA / torchvision / timm versions separately.
+torch
+torchvision
+timm
+numpy
+pandas
+Pillow
+opencv-python
+matplotlib
+seaborn
+scikit-learn
+scikit-image
+tqdm

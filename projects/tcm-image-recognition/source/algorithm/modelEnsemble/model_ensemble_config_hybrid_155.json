@@ -1,0 +1,37 @@
+[
+  {
+    "model_name": "MobileViT_large",
+    "ckpt_version": "8895911",
+    "ckpt_epoch": 59,
+    "ckpt_type": "regular",
+    "transform_type": "force_resize"
+  },
+  {
+    "model_name": "MNv4_Conv_AA_Large",   
+    "ckpt_version": "183155",
+    "ckpt_epoch": 56,   
+    "ckpt_type": "regular",
+    "transform_type": "center_crop" 
+  },
+  {
+    "model_name": "EfficientNetV2_S",
+    "ckpt_version": "9300484",
+    "ckpt_epoch": 61,
+    "ckpt_type": "regular",
+    "transform_type": "center_crop"
+  },
+  {
+    "model_name": "ConvNeXt_V2_Tiny",
+    "ckpt_version": "5905084",
+    "ckpt_epoch": 37,
+    "ckpt_type": "regular",
+    "transform_type": "center_crop"
+  },
+  {
+    "model_name": "MobileViT_large_PAFPN",
+    "ckpt_version": "3126990",
+    "ckpt_epoch": 45,
+    "ckpt_type": "regular",
+    "transform_type": "center_crop"
+  }
+]

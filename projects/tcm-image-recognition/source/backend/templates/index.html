@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>中药材图像识别系统</title>
+    <style>
+        body {
+            font-family: 'Microsoft YaHei', sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .upload-form {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .file-input {
+            margin-bottom: 10px;
+        }
+        .submit-btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .submit-btn:hover {
+            background-color: #45a049;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 4px;
+            display: none;
+        }
+        .success {
+            background-color: #dff0d8;
+            border: 1px solid #d6e9c6;
+            color: #3c763d;
+        }
+        .error {
+            background-color: #f2dede;
+            border: 1px solid #ebccd1;
+            color: #a94442;
+        }
+        .loading {
+            display: none;
+            text-align: center;
+            margin: 20px 0;
+        }
+        .preview-container {
+            margin: 20px 0;
+            text-align: center;
+        }
+        #imagePreview {
+            max-width: 100%;
+            max-height: 300px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>中药材图像识别系统</h1>
+        
+        <div class="upload-form">
+            <form id="uploadForm" enctype="multipart/form-data">
+                <div class="file-input">
+                    <input type="file" id="file" name="file" accept=".png,.jpg,.jpeg,.tiff,.bmp">
+                </div>
+                <button type="submit" class="submit-btn">开始识别</button>
+            </form>
+        </div>
+
+        <div class="preview-container">
+            <img id="imagePreview" alt="预览图">
+        </div>
+
+        <div class="loading" id="loading">
+            正在处理中...
+        </div>
+
+        <div id="result"></div>
+    </div>
+
+    <script>
+        document.getElementById('file').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const preview = document.getElementById('imagePreview');
+                    preview.src = e.target.result;
+                    preview.style.display = 'inline';
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+
+        document.getElementById('uploadForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const resultDiv = document.getElementById('result');
+            const loading = document.getElementById('loading');
+            
+            if (!formData.get('file').name) {
+                resultDiv.innerHTML = '请选择要上传的图片';
+                resultDiv.className = 'error';
+                resultDiv.style.display = 'block';
+                return;
+            }
+
+            loading.style.display = 'block';
+            resultDiv.style.display = 'none';
+
+            fetch('/predict', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                loading.style.display = 'none';
+                resultDiv.style.display = 'block';
+                
+                if (data.error) {
+                    resultDiv.className = 'error';
+                    resultDiv.innerHTML = `错误: ${data.error}`;
+                } else {
+                    resultDiv.className = 'success';
+                    let resultText = `
+                        <strong>识别结果:</strong><br>
+                        主类别: ${data.main_class}<br>
+                        主类别置信度: ${(data.main_confidence * 100).toFixed(2)}%<br>
+                    `;
+                    if (data.subclass) {
+                        resultText += `
+                            子类别: ${data.subclass}<br>
+                            子类别置信度: ${(data.subclass_confidence * 100).toFixed(2)}%
+                        `;
+                    }
+                    resultDiv.innerHTML = resultText;
+                }
+            })
+            .catch(error => {
+                loading.style.display = 'none';
+                resultDiv.style.display = 'block';
+                resultDiv.className = 'error';
+                resultDiv.innerHTML = '服务器错误，请稍后重试';
+                console.error('Error:', error);
+            });
+        });
+    </script>
+</body>
+</html> 

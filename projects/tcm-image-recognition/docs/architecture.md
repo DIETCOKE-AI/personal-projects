@@ -1,63 +1,80 @@
 # 系统架构与推理逻辑
 
-本说明依据历史交接文档及实现节选整理，描述当时的设计和配置，不主张当前线上状态。出处编号见[资料索引](evidence.md)。
+依据交接资料和三端源码整理。源码描述当前提供的历史工作树，不主张其等同当前线上版本。来源编号见[资料索引](evidence.md)，实现边界见[源码核查](source-review.md)。
 
-## 模块职责
+## 运行组件
 
-| 模块 | 职责 | 证据定位 |
-| --- | --- | --- |
-| 采集与设备控制 | 标准化相机图像采集，以及电机、灯光等辅助控制 | A1，第2页；A3，第3–5、10–11页 |
-| 桌面交互 | 发起识别、展示结果、药材信息和历史记录 | A1，第20–23页；A4，第3–9页 |
-| 推理服务 | 图像预处理、主模型融合、未知拒识、子类分类、结果组装 | A1，第2–10、20–23页；A2，ModelManager相关实现节选 |
-| 数据库 | 保存药材与标准信息、主子类关系、历史识别记录 | A2，类别查询与结果组装相关节选 |
-| 训练测试工程 | 数据加载、模型训练、general评估、错误分析及集成阈值比较 | A1，第14–19页；W01–W13 |
+```mermaid
+flowchart TD
+    UI[Vue 3 / Element Plus / Pinia] -->|HTTP 图片识别 / 药材 / 历史| Flask[Flask / PyTorch]
+    UI -->|HTTP 登录 / 验证码 / 用户| Java[Java / RuoYi]
+    Electron[Electron主进程] -->|启动 / 就绪状态| Flask
+    Electron -->|启动 / 就绪状态| Java
+    UI -->|IPC 镜头切换| Electron
+    Electron -->|启动脚本| HW[Python相机与控制]
+    HW -->|WebSocket 8765 视频| UI
+    UI -->|WebSocket 8766 控制| HW
+    Flask --> DB[MySQL药材资料 / 映射 / 历史]
+    Train[PyTorch训练与评估] --> Assets[权重 / 网络定义 / 标签 / 预处理]
+    Assets --> Flask
+```
 
-历史材料包括早期PyQt、后续Vue/Electron，以及不同后端组件描述。公开版以较新交接文档中的Flask预测链路为主线；具体发布版本的启动与进程关系仍需完整工程确认。
+Electron主进程实际启动Flask可执行程序与RuoYi JAR；未在该前端工程发现Express业务服务器入口。Java与相机程序内部未包含在核心源码目录中，外部组件不能仅靠前端文件推定已验收。
 
-## 大类融合与未知拒识
+当前主要上传和拍照组件均POST `/predict/batch`。Flask直接调用同进程 `ModelManager`，没有在HTTP请求与模型管理器之间经过旧TCP服务。后端仍保留 `model_server.py` 和 `predict_client.py`，其中导入与当前接口不匹配，归为历史残留路径。
 
-交接配置的五个主模型实例如下，其中MobileViT_large使用两个不同检查点，因此是五实例、四种架构名。
+源码定位：[Electron编排](../source/frontend/src/main/backend-service.js)、[当前上传](../source/frontend/src/renderer/components/ImgUpload.vue)、[Flask入口](../source/backend/app.py)、[预测控制器](../source/backend/controllers/predictController.py)。
 
-| 实例 | 输入预处理 |
+## 主类融合与拒识
+
+后端配置五个99类主模型实例、四种架构名称：
+
+| 实例 | 输入处理 |
 | --- | --- |
-| MobileViT_large ① | Force Resize |
-| MobileViT_large_PAFPN | Center Crop |
-| MNv4_Conv_AA_Large | Center Crop |
-| EfficientNetV2_M | Center Crop |
-| MobileViT_large ② | Center Crop |
+| MobileViT_large ① | 直接缩放640×640 |
+| MobileViT_large_PAFPN | 短边640，再中心裁剪640×640 |
+| MNv4_Conv_AA_Large | 同上中心裁剪 |
+| EfficientNetV2_M | 同上中心裁剪 |
+| MobileViT_large ② | 同上中心裁剪；使用另一检查点 |
 
-每个模型产生softmax向量p_m，以当前图像上的最大概率c_m作为权重：
+对每张图，每个模型产生softmax向量 `p_m`，以自身最大概率作为权重：
 
 ```text
 c_m = max(p_m)
-p_ensemble = sum(c_m * p_m) / sum(c_m)
-main_confidence = max(p_ensemble)
+q = sum(c_m * p_m) / sum(c_m)
+accept = max(q) >= 0.51
 ```
 
-历史配置在主置信度达到0.51时接受，否则返回未知及相似候选。阈值是当时配置，不是适用于任意数据集的通用阈值。五模型集成不等于已经实现五路并发执行，所见代码节选采用逐模型前向。
+权重随输入图像变化，不是固定的模型验证准确率。当前后端按模型依次前向，主类图像批次配置为8；“五模型集成”本身不代表模型级并发。
 
-## 子类细分与候选排序
+## Top5主类与子类排序
 
-接受后，代码节选会检查Top5大类候选：无需进一步细分的类别直接形成候选；需要细分时调用对应子模型。
+接受后，后端展开Top5主类候选：有子模型的类别取最多Top5子类，无需细分的类别直接形成候选，再全局排序。
 
 ```text
 candidate_score = main_class_score * subclass_probability
 ```
 
-候选经过排序，返回首选和其他结果。该分数用于类别排序；材料没有提供将其解释为药材真伪或质量概率的独立验证。
+最终返回首选和最多4个更多候选。`id` 是数据库全局子类主键；主网络索引、主类数据库ID、子网络内部索引和全局子类ID是不同层次的编号。
 
-## 数据契约
+未知时 `id=-1`，更多候选是Top5主类的代表标准资料，未经过相应子模型。0.51只检查主融合最大概率，最终子类乘积分数不会再用同一阈值过滤；因此最终分数低于0.51与 `is_known=true` 可以同时出现。该分数用于系统决策与排序，没有据此认证药材真伪或质量的概率含义。
 
-训练类别顺序、网络输出索引、子模型内部标签、数据库主子类ID和展示名称必须绑定同一版本。由155扩到200类涉及新增、删除、合并和重编号，不能只扩分类头后沿用全部旧索引。
+子类存在药材特定处理：拳参/栀子使用1280输入，麦冬等中心裁剪，陈皮先以传统轮廓质心提取patch；它不是可学习的语义分割模型。实现见[模型管理器](../source/backend/predict_two_steps.py)与[区域裁剪](../source/backend/segmentation.py)。
 
-部署还需要固定模型结构、权重、输入尺寸、缩放或裁剪方式、归一化统计量。采集原图分辨率与模型输入分辨率属于不同环节。
+## 交付与研究版本
 
-## 版本范围
+| 项目 | 99类推理后端 | 200类高级集成研究 |
+| --- | --- | --- |
+| 普通MobileViT_large | mobilevitv2_175 | mobilevitv2_200 |
+| PAFPN骨干 | mobilevitv2_175 | mobilevitv2_175 |
+| 模型组合 | 普通MobileViT两实例，另加PAFPN、MNv4、EfficientNetV2_M | 普通MobileViT、PAFPN、MNv4、EfficientNetV2_S、ConvNeXt_V2_Tiny |
+| 输入 | 一项force_resize、其余center_crop | MNv4基础center_crop；其他四项force_resize+翻转TTA |
+| 并行 | 逐模型前向 | advanced有线程池和模型级GPU分配，性能未复测 |
 
-| 阶段 | 资料反映的状态 |
-| --- | --- |
-| 99类与子类系统 | 有部署配置、维护与联调交付记录 |
-| 155类 | 单模型、开集集成和困难子类的训练及评估 |
-| 200类 | 数据重组、测试集建设、多架构训练及泛化问题排查 |
+同名模型、相同类别数或相近文件名不足以确认权重兼容。200类有删除、合并、重编号，需要成套绑定网络、检查点、预处理、有序标签及数据库，不能只扩分类头或替换权重。
 
-上述划分区分交付版本与研究范围，避免把后期实验成绩直接当成交付设备性能。
+## 桌面与设备的完成度
+
+当前界面已有图片/拍照识别、结果与候选、历史、药材库及PDF导出连接。配置页参数硬编码且禁用；数据采集主要是拍图与本地ZIP保存，未接通自动标注训练流程。硬件WS发送存在，不等于已经验证每条电气命令或设备动作。
+
+启动就绪依据日志标记，后端标记先于HTTP监听；构建和外置程序布局仍有缺件。公开源码是研究快照，完整复现还需[配套资产与环境](reproducibility.md)。

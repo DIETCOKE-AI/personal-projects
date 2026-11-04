@@ -1,0 +1,14 @@
+# Network
+model_use: Swin_V3_Tiny
+dropout_rate: 0.1
+
+# Execution
+lr_decay_rate: 0.2
+milestones : [60, 120, 160]
+loss_function: bce
+loss_reduction: sum
+optim: AdamW
+optim_params: {weight_decay: '0.05'}
+
+# Pretraining
+use_pretrained: True

@@ -1,0 +1,11 @@
+# Network
+model_use: resnet18
+dropout_rate: 0.1
+
+# Execution
+lr_decay_rate: 0.2
+milestones : [60, 120, 160]
+loss_function: bce
+loss_reduction: sum
+optim: SGD
+optim_params: {momentum: '0.9', weight_decay: '5e-4'}

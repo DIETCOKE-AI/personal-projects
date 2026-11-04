@@ -1,0 +1,49 @@
+[
+  {
+    "model_name": "MobileViT_large",
+    "ckpt_version": "7914849",
+    "ckpt_epoch": 23,
+    "ckpt_type": "regular",
+    "transform_type": "force_resize",
+    "use_tta": true,
+    "use_enhanced": true
+  },
+  {
+    "model_name": "MNv4_Conv_AA_Large",
+    "ckpt_version": "5709737",
+    "ckpt_epoch": 97,
+    "ckpt_type": "regular",
+    "transform_type": "center_crop",
+    "use_tta": false,
+    "use_enhanced": false
+  },
+  {
+    "model_name": "EfficientNetV2_S",
+    "ckpt_version": "3913103",
+    "ckpt_epoch": 45,
+    "ckpt_type": "regular",
+    "transform_type": "force_resize",
+    "use_tta": true,
+    "use_enhanced": true
+  },
+  {
+    "model_name": "ConvNeXt_V2_Tiny",
+    "ckpt_version": "9268110",
+    "ckpt_epoch": 26,
+    "ckpt_type": "regular",
+    "transform_type": "force_resize",
+    "use_tta": true,
+    "use_enhanced": true
+  },
+  {
+    "model_name": "MobileViT_large_PAFPN",
+    "ckpt_version": "2811301",
+    "ckpt_epoch": 85,
+    "ckpt_type": "regular",
+    "transform_type": "force_resize",
+    "use_tta": true,
+    "use_enhanced": true
+  }
+]
+
+
