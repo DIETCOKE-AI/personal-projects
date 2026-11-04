@@ -6,7 +6,18 @@
 
 | 项目 | 简介 | 技术 | 入口 |
 | --- | --- | --- | --- |
+| 中药材智能识别系统 | 两阶段识别、交付维护、泛化评估与数据治理的项目复盘 | Python、PyTorch、计算机视觉 | [项目介绍](projects/tcm-image-recognition/README.md) · [实验结果](projects/tcm-image-recognition/docs/experiments.md) |
 | GB/T 7714 文献格式整理 Skill | 批量规范参考文献、保守去重、分流缺失信息并追踪来源 | Python 标准库、Agent Skill | [项目介绍](projects/gbt7714-reference-cleaner/README.md) · [技能说明](projects/gbt7714-reference-cleaner/SKILL.md) |
+
+## 中药材智能识别系统
+
+记录2025年8月至11月参与的算法研发与交付协作：子类模型与部署配置排查、155类预处理对照、200类general评估、错误溯源及数据治理。
+
+- 两阶段识别：多模型大类融合、未知拒识、子类细分与候选排序。
+- 代表性历史结果：200类、5,974张已知类general测试，MNv4指定检查点Top-1为95.88%。
+- 展示形式：项目复盘、架构说明、个人贡献时间线和23次评估摘要；完整工程、权重及原始图像未包含在公开版中。
+
+[阅读项目档案](projects/tcm-image-recognition/README.md) · [查看个人贡献](projects/tcm-image-recognition/docs/contributions.md) · [查看评估数据](projects/tcm-image-recognition/results/evaluation-summary.csv)
 
 ## GB/T 7714 文献格式整理 Skill
 
@@ -39,3 +50,4 @@ python -m unittest discover -s tests -v
 - [GB/T 7714 格式依据与实现范围](projects/gbt7714-reference-cleaner/references/format-rules.md)
 
 测试集中的构造记录仅用于验证格式转换与去重逻辑；格式整理结果不能代替文献真实性核验。
+
